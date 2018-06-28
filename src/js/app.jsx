@@ -5,22 +5,34 @@ import Article from './article'
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: 'English',
-                  text:'Some text...',
-                  language:'Choose your language:',
-                  headText:'Write something to be translated:'
+    this.state = {
+                  value: 'English',
+                  language:'Choose your language: ',
+                  icon: require("../assets/images/en.png")
                 };
     this.handleChange = this.handleChange.bind(this);
-    this.handleChangeInput = this.handleChangeInput.bind(this);
   }
 
   handleChange(event) {
     this.setState({value: event.target.value});
+    switch(event.target.value){
+      case "Bulgarian" :
+            this.setState({icon: require("../assets/images/bg.png")})
+            this.setState({language: "Избери език: "})
+            break
+      case "German" :
+      this.setState({icon: require("../assets/images/de.png")})
+      this.setState({language: "Sprache wählen: "})
+      break
+      default :
+      this.setState({icon: require("../assets/images/en.png")})
+      this.setState({language: "Choose your language: "})
+
+
+    }
   }
 
-  handleChangeInput(event){
-    this.setState({text: event.target.value})
-  }
+
 
   render(){
     const text = this.state.text;
@@ -38,11 +50,11 @@ class App extends React.Component {
         </select>
       </label>
 
-      <label>
-        {headText}
-        <input placeholder={text} onChange={this.handleChangeInput}/>
-      </label>
-        <Article title={this.state.value}>{this.state.text}</Article>
+        <Article title={this.state.value} 
+          source={this.state.icon}
+          >
+          {this.state.text}
+        </Article >
       </div>
   )}
 };
